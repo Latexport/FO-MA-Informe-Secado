@@ -1,0 +1,231 @@
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+	<div class="container-fluid">
+		<a class="navbar-brand" href="#">Navbar</a>
+		<img
+      src="https://www.latexport.com/images/cliente/logotipo_id_4976.png"
+      width="190"
+      height="50"
+      alt="logo"
+    />
+		<div class="navbar-left">
+			<ul>
+				<li>
+					<a href="">Encuesta</a>
+				</li>
+				<li>
+					<a href="">Informes</a>
+				</li>
+				<li>
+					<a href="">Buscar equipos</a>
+				</li>
+
+				<li>
+					<a href="buscarequipos.html">Hoja de vida del equipo</a>
+				</li>
+			</ul>
+		</div>
+
+		<div class="navbar-right">
+			<ul>
+				<li class="navbar-email">SISTEMAS</li>
+			</ul>
+		</div>
+	</div>
+</nav>
+
+<div class="container">
+	<div class="row justify-content-center">
+		<div class="col-md-4 col-lg-6">
+			<form id="hojacalculo" class="row g-3" method="POST" action="/">
+				<h3 class="col-md-12">Mesa de Ayuda</h3>
+				<div class="col-md-6">
+					<label for="fechaHoraSolicitud"class="form-label"
+            >Fecha y Hora de Solicitud</label>
+					<input
+            type="datetime-local"
+            class="form-control"
+            id="fechaHoraSolicitud"
+          />
+        </div>
+					<script>
+						function obtenerFechaHoraActual() {
+            const ahora = new Date();
+            const anio = ahora.getFullYear();
+            const mes = (ahora.getMonth() + 1).toString().padStart(2,"0");
+            const dia = ahora.getDate().toString().padStart(2,"0");
+            const horas = ahora.getHours().toString().padStart(2,"0");
+            const minutos = ahora.getMinutes().toString().padStart(2,"0");
+            const horaActual = `${anio}-${mes}-${dia}T${horas}:${minutos}`;
+            return horaActual;
+          }
+
+          // Establecer la hora actual en el campo de entrada
+          document.addEventListener("DOMContentLoaded", function () {
+            const fechaHoraSolicitudInput =
+              document.getElementById("fechaHoraSolicitud");
+            fechaHoraSolicitudInput.value = obtenerFechaHoraActual();
+          });
+					</script>
+
+					<div class="col-md-6">
+						<label class="form-label"for="fechaHoraFinalizado"
+            >Fecha y Hora Finalizado</label>
+						<input
+            type="datetime-local"
+            class="form-control"
+            id="fechaHoraFinalizado"
+            name="fechaHoraFinalizado"
+          />
+        </div>
+
+						<div class="col-12">
+							<label class="form-label"for="tipoSolicitud"
+            >Tipo de Solicitud</label>
+							<select class="form-select"id="tipoSolicitud"name="tipoSolicitud">
+            <option value="Incidentes">Incidentes</option>
+            <option value="Requerimiento">Requerimiento</option>
+            <option value="Administrativo">Administrativo</option>
+          </select>
+						</div>
+
+						<div class="col-12">
+							<label class="form-label"for="tipoAtencion">Tipo de Atención</label>
+							<select class="form-select"id="tipoAtencion"name="tipoAtencion">
+            <option value="Remoto">Remoto</option>
+            <option value="EnSitio">En Sitio</option>
+          </select>
+						</div>
+
+						<div class="col-md-6">
+							<label class="form-label"for="estado">Estado</label>
+							<select class="form-select"id="estado"name="estado">
+            <option value="Resuelto">Resuelto</option>
+            <option value="Pendiente">Pendiente</option>
+          </select>
+						</div>
+						<div class="col-md-6">
+							<label class="form-label"for="prioridad">Prioridad</label>
+							<select class="form-select"id="prioridad"name="prioridad">
+            <option value="Alto">Alto</option>
+            <option value="Medio">Medio</option>
+            <option value="Bajo">Bajo</option>
+          </select>
+						</div>
+
+						<div class="col-12">
+							<label class="form-label"for="descripcionProblema"></label>
+							<textarea
+            placeholder="Descripción del Problema"
+            class="form-control"
+            id="descripcionProblema"
+            name="descripcionProblema"
+            rows="4"
+          ></textarea>
+						</div>
+						<div class="col-12">
+							<label class="form-label"for="tipoServicio">Tipo Servicio:</label>
+							<select
+            class="form-control"
+            id="tipoServicio"
+            name="tipoServicio"
+          >
+            <option value="AdministrativoFacturación">
+              Administrativo-Facturación
+            </option>
+            <option value="AlarmasExpertos">Alarmas Expertos</option>
+            <option value="Antivirus">Antivirus</option>
+            <option value="Backup">Backup</option>
+            <option value="Biable">Biable</option>
+            <option value="BiableSAAR">Biable SAAR</option>
+            <option value="BloqueoUsuarioRed">Bloqueo usuario red</option>
+            <option value="CCTV">CCTV</option>
+            <option value="Celulares">Celulares</option>
+            <option value="Correo">Correo</option>
+            <option value="Energia">Energia</option>
+            <option value="Escaner">Escaner</option>
+            <option value="GenericTransfer">Generic Transfer</option>
+            <option value="GestionEquipos">Gestion Equipos</option>
+            <option value="GoogleDrive">Google Drive</option>
+            <option value="Hardware">Hardware</option>
+            <option value="Impresoras">Impresoras</option>
+            <option value="InfraestructuraRed">Infraestructura Red</option>
+            <option value="Insitu">Insitu</option>
+            <option value="InsituITEMS">Insitu ITEMS</option>
+            <option value="InsituUsuarios">Insitu Usuarios</option>
+            <option value="Internet">Internet</option>
+            <option value="NominaWEB">Nomina WEB</option>
+            <option value="Pendiente">Otros</option>
+            <option value="PlanTrabajo">Plan de Trabajo</option>
+            <option value="RedCableado">Red Cableado</option>
+            <option value="RestriccionesRedNS">Restricciones red NS</option>
+            <option value="SGC">SGC</option>
+            <option value="Siesa">Siesa</option>
+            <option value="Siesa Licencia">Siesa Licencia</option>
+            <option value="SiesaModificaciónFormatos">
+              Siesa Modificación Formatos
+            </option>
+            <option value="SiesaParches">Siesa Parches</option>
+            <option value="Software">Software</option>
+            <option value="Telefonia">Telefonia</option>
+            <option value="VPN">VPN</option>
+            <option value="Wifi">Wifi</option>
+            <option value="Wifi-Acceso">Wifi-Acceso</option>
+          </select>
+						</div>
+
+						<div class="col-12">
+							<label class="form-label"for="solicitadoPor">Solicitado por</label>
+							<select
+            class="form-select"
+            id="solicitadoPor"
+            name="solicitadoPor"
+          >
+            <!-- Aquí se generarán las opciones dinámicamente en tu código JavaScript -->
+          </select>
+						</div>
+
+						<div class="col-12">
+							<label class="form-label"for="area">Área</label>
+							<input type="text"class="form-control"id="area"name="area"/>
+        </div>
+							<div class="col-12">
+								<label class="form-label"for="cargo">Cargo</label>
+								<input
+            type="text"
+            class="form-control"
+            id="cargo"
+            name="cargo"
+          />
+        </div>
+	
+							
+					
+										<div class="col-12">
+											<label class="input-group mb"for="atendidoPor"
+            >Atendido Por:</label>
+											<select class="form-select"id="atendidoPor"name="atendidoPor">
+            <option value="HugoCorrea">Hugo Correa</option>
+            <option value="AnaIsabelMontes">Ana Isabel Montes</option>
+          </select>
+										</div>
+										<div class="col-12">
+											<label for="solucion"></label>
+											<textarea
+            placeholder="Solución"
+            class="form-control"
+            id="solucion"
+            name="solucion"
+            rows="4"
+          ></textarea>
+										</div>
+
+										<div class="col-12">
+											<button type="submit"class="btn btn-primary"id="submit">
+            Enviar
+          </button>
+										</div>
+			</form>
+		</div>
+	</div>
+</div>
+<script>document.getElementById("myform").reset();</script>
