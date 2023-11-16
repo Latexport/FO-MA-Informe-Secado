@@ -2,7 +2,6 @@ document.addEventListener("DOMContentLoaded", () => {
   console.log("INICIANDO SCRIPT");
 
   document.getElementById("hojacalculo").addEventListener("submit", (event) => {
-    console.log("SE PRECIONO EL BOTON");
 
     event.preventDefault(); // Evita que se envíe el formulario de forma predeterminada
 
@@ -12,11 +11,10 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 async function submit() {
-  console.log("[submit()]");
+  console.log("[submit]");
 
   // Obtiene los valores ingresados en el formulario
   const datosExtraidos = extraerDatos();
-  console.log("LOS DATOS SON : ", datosExtraidos);
   // Establece los valores en las celdas correspondientes
 
   //una funcion manejara todo los dados , creanod nuevas varibles segun lo necesecitados
@@ -166,13 +164,14 @@ function extraerDatos() {
       `totalTiempoMinimo`,
     ]
     //recojer el valor de cada uno
-    const rta = elementos.map(element => {
-      return obtenerElemento(element)
+    const data = {}
+    elementos.forEach(element => {
+      data[element] = obtenerElemento(element)
     })
 
-    console.log(`los datos son `, rta)
+    console.log(`los datos son `, data)
     // devolvemos un objeto para tenerlo mas adaptativo
-    return rta
+    return data
 
   } catch (error) {
     console.error("Error al recolectar la data del formulario: ", error);
