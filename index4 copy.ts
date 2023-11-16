@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
   console.log("INICIANDO SCRIPT");
 
-  document.getElementById("hojacalculo").addEventListener("submit", (event) => {
+  document.getElementById("hojacalculo").addEventListener("submit", (event: Event) => {
     console.log("SE PRECIONO EL BOTON");
 
     event.preventDefault(); // Evita que se envíe el formulario de forma predeterminada
@@ -17,7 +17,7 @@ async function submit() {
   const datosExtraidos = extraerDatos();
   console.log("LOS DATOS SON : ", datosExtraidos);
   // Establece los valores en las celdas correspondientes
-  console.log();
+ console.log();
   const data = [
     [
       datosExtraidos.fechaProduccion,
@@ -136,9 +136,9 @@ function extraerDatos() {
   try {
     console.log("EXTRAEMOS LOS DATOS");
 
-    const fechaProduccion = (document.getElementById("fechaProduccion") as HTMLInputElement).value;
+    const fechaProduccion= (document.getElementById("fechaProduccion") as HTMLInputElement).value;
     console.log("fechaProduccion", fechaProduccion);
-
+  
 
     const fechaSecado = (document.getElementById("fechaSecado") as HTMLInputElement).value;
     console.log("fechaSecado", fechaSecado);
@@ -215,7 +215,7 @@ function extraerDatos() {
     const totalTiempoMinimo = (document.getElementById("totalTiempoMinimo") as HTMLInputElement).value;
     console.log("totalTiempoMinimo", totalTiempoMinimo);
 
-
+    
     const data = {
       fechaProduccion,
       fechaSecado,
@@ -258,103 +258,104 @@ function extraerDatos() {
   //Reproceso 3 cpmpletado fase 1
   function toggleCampos() {
     var reprocesoSelect = (document.getElementById("reproceso") as HTMLSelectElement).value;
-    var tipoReprocesoInput = document.getElementById("tipoReproceso");
+    var tipoReprocesoInput = document.getElementById("tipoReproceso") as HTMLInputElement;
     var anteriorRegistroInput = document.getElementById("anteriorRegistro") as HTMLInputElement;
-
+  
     // Si la opción seleccionada es "No", deshabilita los campos
     if (reprocesoSelect === "No") {
-
+   
       tipoReprocesoInput.disabled = true;
       anteriorRegistroInput.disabled = true;
     } else {
       // Si la opción seleccionada es "Sí", habilita los campos
-
+     
       tipoReprocesoInput.disabled = false;
       anteriorRegistroInput.disabled = false;
     }
   }
   toggleCampos();
-  //Unidades teoricas 4
-  function calcularResultado() {
-    // Obtener el valor del campo "pesoSeco"
-    const pesoSeco = parseFloat(document.getElementById("pesoSeco").value) || 0;
+//Unidades teoricas 4
+function calcularResultado() {
+  // Obtener el valor del campo "pesoSeco"
+  const pesoSeco = parseFloat(document.getElementById("pesoSeco").value) || 0;
 
-    // Definir un peso medio (cambia esto según tus necesidades)
-    const pesoMedio = 500; // Este es un valor de ejemplo, debes ajustarlo según tu caso.
+  // Definir un peso medio (cambia esto según tus necesidades)
+  const pesoMedio = 500; // Este es un valor de ejemplo, debes ajustarlo según tu caso.
 
-    // Realizar los cálculos
-    const resultado = (pesoSeco * 1000) / pesoMedio * 2;
+  // Realizar los cálculos
+  const resultado = (pesoSeco * 1000) / pesoMedio * 2;
 
-    // Mostrar el resultado donde desees (por ejemplo, en un campo de texto)
-    document.getElementById("resultado").value = resultado;
+  // Mostrar el resultado donde desees (por ejemplo, en un campo de texto)
+  document.getElementById("resultado").value = resultado;
 
-    // Guardar el resultado en el campo "unidadesTeoricas"
-    document.getElementById("unidadesTeoricas").value = resultado;
+  // Guardar el resultado en el campo "unidadesTeoricas"
+  document.getElementById("unidadesTeoricas").value = resultado;
 
-    // También puedes devolver el resultado si quieres usarlo en otro lugar
-    return resultado;
+  // También puedes devolver el resultado si quieres usarlo en otro lugar
+  return resultado;
+}
+calcularResultado();
+//Unidades diferencia 
+function actualizarDiferencia() {
+  // Obtiene los valores de unidades y unidades teóricas
+  const unidades = parseFloat((document.getElementById("unidades") as HTMLInputElement).value) || 0;
+  const unidadesTeoricas = parseFloat((document.getElementById("unidadesTeoricas") as HTMLInputElement).value) || 0;
+
+  // Calcula la diferencia en porcentaje
+  const diferenciaPorcentaje = ((unidadesTeoricas - unidades) / unidadesTeoricas) * 100;
+
+  // Actualiza el campo "diferencia" con el resultado en porcentaje
+  (document.getElementById("diferencia") as HTMLInputElement).value = diferenciaPorcentaje.toFixed(2) + "%";
+}
+actualizarDiferencia();
+
+// ******consumo de mezclas 6 completada fase 2******
+function calcularConsumoMezclas() {
+  // Obtener el valor del campo "pesoSeco"
+  const pesoSecoInput = document.getElementById("pesoSeco") as HTMLInputElement;
+  const pesoSeco = parseFloat(pesoSecoInput.value)
+  // Calcular el consumo de mezclas multiplicando por 0.55
+  const consumoMezclas1 = pesoSeco * 0.55;
+
+  // Mostrar el resultado en el campo "consumoMezclas"
+  (document.getElementById("consumoMezclas") as HTMLInputElement).value = consumoMezclas1.toString();
+
+  // También puedes devolver el resultado si quieres usarlo en otro lugar
+  return consumoMezclas1;
+}
+calcularConsumoMezclas();
+
+//*****suma tiempo 7 completada face 2*****
+function sumarTiempos() {
+  // Obtener los valores de los campos de tiempo
+  const tiempoSecadoInput = document.getElementById("tiempoSecado") as HTMLInputElement;
+  const tiempoAdicionalInput = document.getElementById("tiempoAdicional") as HTMLInputElement;
+  const tiempoEnfriamientoInput = document.getElementById("tiempoEnfriamiento") as HTMLInputElement;
+
+  // Intentar convertir los valores a números
+  const tiempoSecado = parseFloat(tiempoSecadoInput.value) || 0;
+  const tiempoAdicional = parseFloat(tiempoAdicionalInput.value) || 0;
+  const tiempoEnfriamiento = parseFloat(tiempoEnfriamientoInput.value) || 0;
+
+  // Verificar si la conversión fue exitosa
+  if (isNaN(tiempoSecado) || isNaN(tiempoAdicional) || isNaN(tiempoEnfriamiento)) {
+    console.error("Error: Uno o más valores de tiempo no son números válidos.");
+    return;
   }
-  calcularResultado();
-  //Unidades diferencia 
-  function actualizarDiferencia() {
-    // Obtiene los valores de unidades y unidades teóricas
-    const unidades = parseFloat((document.getElementById("unidades") as HTMLInputElement).value) || 0;
-    const unidadesTeoricas = parseFloat((document.getElementById("unidadesTeoricas") as HTMLInputElement).value) || 0;
 
-    // Calcula la diferencia en porcentaje
-    const diferenciaPorcentaje = ((unidadesTeoricas - unidades) / unidadesTeoricas) * 100;
+  // Sumar los tiempos
+  const totalTiempos = tiempoSecado + tiempoAdicional + tiempoEnfriamiento;
+  console.log("totalTiempoww", totalTiempos);
 
-    // Actualiza el campo "diferencia" con el resultado en porcentaje
-    (document.getElementById("diferencia") as HTMLInputElement).value = diferenciaPorcentaje.toFixed(2) + "%";
-  }
-  actualizarDiferencia();
+  // Mostrar el resultado en el campo "totalTiempo"
+  console.log("totalTiempos", totalTiempos);
+  (document.getElementById("totalTiempo") as HTMLInputElement).value = totalTiempos.toString();
 
-  // ******consumo de mezclas 6 completada fase 2******
-  function calcularConsumoMezclas() {
-    // Obtener el valor del campo "pesoSeco"
-    const pesoSecoInput = document.getElementById("pesoSeco") as HTMLInputElement;
-    const pesoSeco = parseFloat(pesoSecoInput.value)
-    // Calcular el consumo de mezclas multiplicando por 0.55
-    const consumoMezclas1 = pesoSeco * 0.55;
-
-    // Mostrar el resultado en el campo "consumoMezclas"
-    (document.getElementById("consumoMezclas") as HTMLInputElement).value = consumoMezclas1.toString();
-
-    // También puedes devolver el resultado si quieres usarlo en otro lugar
-    return consumoMezclas1;
-  }
-  calcularConsumoMezclas();
-
-  //*****suma tiempo 7 completada face 2*****
-  function sumarTiempos() {
-    // Obtener los valores de los campos de tiempo
-    const tiempoSecadoInput = document.getElementById("tiempoSecado") as HTMLInputElement;
-    const tiempoAdicionalInput = document.getElementById("tiempoAdicional") as HTMLInputElement;
-    const tiempoEnfriamientoInput = document.getElementById("tiempoEnfriamiento") as HTMLInputElement;
-
-    // Intentar convertir los valores a números
-    const tiempoSecado = parseFloat(tiempoSecadoInput.value) || 0;
-    const tiempoAdicional = parseFloat(tiempoAdicionalInput.value) || 0;
-    const tiempoEnfriamiento = parseFloat(tiempoEnfriamientoInput.value) || 0;
-
-    // Verificar si la conversión fue exitosa
-    if (isNaN(tiempoSecado) || isNaN(tiempoAdicional) || isNaN(tiempoEnfriamiento)) {
-      console.error("Error: Uno o más valores de tiempo no son números válidos.");
-      return;
-    }
-
-    // Sumar los tiempos
-    const totalTiempos = tiempoSecado + tiempoAdicional + tiempoEnfriamiento;
-    console.log("totalTiempoww", totalTiempos);
-
-    // Mostrar el resultado en el campo "totalTiempo"
-    console.log("totalTiempos", totalTiempos);
-    (document.getElementById("totalTiempo") as HTMLInputElement).value = totalTiempos.toString();
-
-    return totalTiempos;
-  }
-  sumarTiempos();
+  return totalTiempos;
+}
+sumarTiempos();
 
 }
 
-
+   
+                         
