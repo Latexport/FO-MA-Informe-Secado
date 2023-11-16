@@ -6,6 +6,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     event.preventDefault(); // Evita que se envíe el formulario de forma predeterminada
 
+    //ejecutamos la funcion principal
     submit();
   });
 });
@@ -17,7 +18,7 @@ async function submit() {
   const datosExtraidos = extraerDatos();
   console.log("LOS DATOS SON : ", datosExtraidos);
   // Establece los valores en las celdas correspondientes
-  console.log();
+
   const data = [
     [
       datosExtraidos.fechaProduccion,
@@ -72,7 +73,6 @@ function obtenerLetraColumnaDesdeNumero(numero) {
   }
 }
 
-
 async function obtenerNumeroFila(sheet, context) {
   try {
     // Obtener todas las celdas en la columna A
@@ -102,9 +102,6 @@ async function obtenerNumeroFila(sheet, context) {
   }
 }
 
-
-
-
 async function agregarDatosExcel(nombreHoja, data) {
   try {
     await Excel.run(async (context) => {
@@ -128,237 +125,54 @@ async function agregarDatosExcel(nombreHoja, data) {
   }
 }
 
+function extraerDatos() {
+  try {
+    console.log("[extraerDatos]");
 
+    //lista de los imputs a recojer
+    const elementos = [
+      `fechaProduccion`,
+      `fechaSecado`,
+      `secador`,
+      `auxiliares`,
+      `referencia`,
+      `referenciaExtraida`,
+      `turno`,
+      `lote`,
+      `maquina`,
+      `registro`,
+      `reproceso`,
+      `tipoReproceso`,
+      `anteriorRegistro`,
+      `temperatura`,
+      `tiempoSecado`,
+      `tiempoAdicional`,
+      `tiempoEnfriamiento`,
+      `silicona`,
+      `pesoSeco`,
+      `unidades`,
+      `unidadesTeoricas`,
+      `diferencia`,
+      `consumoMezclas`,
+      `observaciones`,
+      `totalTiempo`,
+      `totalTiempoMinimo`,
+    ]
+    //recojer el valor de cada uno
+    const rta = elementos.map(element => {
+      return obtenerElemento(element)
+    })
 
+    console.log(`los datos son `, rta)
+    // devolvemos un objeto para tenerlo mas adaptativo
+    return rta
 
+  } catch (error) {
+    console.error("Error al recolectar la data del formulario: ", error);
+  }
+}
 
-// function extraerDatos() {
-//   try {
-//     console.log("EXTRAEMOS LOS DATOS");
-
-//     const fechaProduccion = (document.getElementById("fechaProduccion") as HTMLInputElement).value;
-//     console.log("fechaProduccion", fechaProduccion);
-
-
-//     const fechaSecado = (document.getElementById("fechaSecado") as HTMLInputElement).value;
-//     console.log("fechaSecado", fechaSecado);
-
-//     const secador = (document.getElementById("secador") as HTMLSelectElement).value;
-//     console.log("secador", secador);
-
-//     const auxiliares = (document.getElementById("auxiliares") as HTMLSelectElement).value;
-//     console.log("auxiliares", auxiliares);
-
-//     const referencia = (document.getElementById("referencia") as HTMLSelectElement).value;
-//     console.log("referencia", referencia);
-
-//     const referenciaExtraida = (document.getElementById("referenciaExtraida") as HTMLInputElement).value;
-//     console.log("referenciaExtraida", referenciaExtraida);
-
-//     const turno = (document.getElementById("turno") as HTMLSelectElement).value;
-//     console.log("turno", turno);
-
-//     const lote = (document.getElementById("lote") as HTMLInputElement).value;
-//     console.log("lote", lote);
-
-//     const maquina = (document.getElementById("maquina") as HTMLSelectElement).value;
-//     console.log("maquina", maquina);
-
-//     const registro = (document.getElementById("registro") as HTMLInputElement).value;
-//     console.log("registro", registro);
-
-//     const reproceso = (document.getElementById("reproceso") as HTMLSelectElement).value;
-//     console.log("reproceso", reproceso);
-
-//     const tipoReproceso = (document.getElementById("tipoReproceso") as HTMLSelectElement).value;
-//     console.log("tipoReproceso", tipoReproceso);
-
-//     const anteriorRegistro = (document.getElementById("anteriorRegistro") as HTMLInputElement).value;
-//     console.log("anteriorRegistro", anteriorRegistro);
-
-//     const temperatura = (document.getElementById("temperatura") as HTMLInputElement).value;
-//     console.log("temperatura", temperatura);
-
-//     const tiempoSecado = (document.getElementById("tiempoSecado") as HTMLInputElement).value;
-//     console.log("tiempoSecado", tiempoSecado);
-
-//     const tiempoAdicional = (document.getElementById("tiempoAdicional") as HTMLInputElement).value;
-//     console.log("tiempoAdicional", tiempoAdicional);
-
-//     const tiempoEnfriamiento = (document.getElementById("tiempoEnfriamiento") as HTMLInputElement).value;
-//     console.log("tiempoEnfriamiento", tiempoEnfriamiento);
-//     console.log("si esta bien 1.1");
-//     const silicona = (document.getElementById("silicona") as HTMLInputElement).value;
-//     console.log("silicona", silicona);
-
-//     const pesoSeco = (document.getElementById("pesoSeco") as HTMLInputElement).value;
-//     console.log("pesoSeco", pesoSeco);
-
-//     const unidades = (document.getElementById("unidades") as HTMLInputElement).value;
-//     console.log("unidades", unidades);
-
-//     const unidadesTeoricas = (document.getElementById("unidadesTeoricas") as HTMLInputElement).value;
-//     console.log("unidadesTeoricas", unidadesTeoricas);
-
-//     const diferencia = (document.getElementById("diferencia") as HTMLInputElement).value;
-//     console.log("diferencia", diferencia);
-
-//     const consumoMezclas = (document.getElementById("consumoMezclas") as HTMLInputElement).value;
-//     console.log("registro", registro);
-
-//     const observaciones = (document.getElementById("observaciones") as HTMLSelectElement).value;
-//     console.log("observaciones", observaciones);
-
-//     const totalTiempo = (document.getElementById("totalTiempo") as HTMLInputElement).value;
-//     console.log("totalTiempo", totalTiempo);
-
-//     const totalTiempoMinimo = (document.getElementById("totalTiempoMinimo") as HTMLInputElement).value;
-//     console.log("totalTiempoMinimo", totalTiempoMinimo);
-
-
-//     const data = {
-//       fechaProduccion,
-//       fechaSecado,
-//       secador,
-//       auxiliares,
-//       referencia,
-//       referenciaExtraida,
-//       turno,
-//       lote,
-//       maquina,
-//       registro,
-//       reproceso,
-//       tipoReproceso,
-//       anteriorRegistro,
-//       temperatura,
-//       tiempoSecado,
-//       tiempoAdicional,
-//       tiempoEnfriamiento,
-//       silicona,
-//       pesoSeco,
-//       unidades,
-//       unidadesTeoricas,
-//       diferencia,
-//       consumoMezclas,
-//       observaciones,
-//       totalTiempo,
-//       totalTiempoMinimo
-//     };
-//     console.log(data);
-//     return data;
-//   } catch (error) {
-//     console.log("error al recojer  la data del formulario");
-//     console.log(error);
-//   }
-
-//   //
-
-
-
-//   //Reproceso 3 cpmpletado fase 1
-//   function toggleCampos() {
-//     var reprocesoSelect = (document.getElementById("reproceso") as HTMLSelectElement).value;
-//     var tipoReprocesoInput = document.getElementById("tipoReproceso");
-//     var anteriorRegistroInput = document.getElementById("anteriorRegistro") as HTMLInputElement;
-
-//     // Si la opción seleccionada es "No", deshabilita los campos
-//     if (reprocesoSelect === "No") {
-
-//       tipoReprocesoInput.disabled = true;
-//       anteriorRegistroInput.disabled = true;
-//     } else {
-//       // Si la opción seleccionada es "Sí", habilita los campos
-
-//       tipoReprocesoInput.disabled = false;
-//       anteriorRegistroInput.disabled = false;
-//     }
-//   }
-//   toggleCampos();
-//   //Unidades teoricas 4
-//   function calcularResultado() {
-//     // Obtener el valor del campo "pesoSeco"
-//     const pesoSeco = parseFloat(document.getElementById("pesoSeco").value) || 0;
-
-//     // Definir un peso medio (cambia esto según tus necesidades)
-//     const pesoMedio = 500; // Este es un valor de ejemplo, debes ajustarlo según tu caso.
-
-//     // Realizar los cálculos
-//     const resultado = (pesoSeco * 1000) / pesoMedio * 2;
-
-//     // Mostrar el resultado donde desees (por ejemplo, en un campo de texto)
-//     document.getElementById("resultado").value = resultado;
-
-//     // Guardar el resultado en el campo "unidadesTeoricas"
-//     document.getElementById("unidadesTeoricas").value = resultado;
-
-//     // También puedes devolver el resultado si quieres usarlo en otro lugar
-//     return resultado;
-//   }
-//   calcularResultado();
-//   //Unidades diferencia 
-//   function actualizarDiferencia() {
-//     // Obtiene los valores de unidades y unidades teóricas
-//     const unidades = parseFloat((document.getElementById("unidades") as HTMLInputElement).value) || 0;
-//     const unidadesTeoricas = parseFloat((document.getElementById("unidadesTeoricas") as HTMLInputElement).value) || 0;
-
-//     // Calcula la diferencia en porcentaje
-//     const diferenciaPorcentaje = ((unidadesTeoricas - unidades) / unidadesTeoricas) * 100;
-
-//     // Actualiza el campo "diferencia" con el resultado en porcentaje
-//     (document.getElementById("diferencia") as HTMLInputElement).value = diferenciaPorcentaje.toFixed(2) + "%";
-//   }
-//   actualizarDiferencia();
-
-//   // ******consumo de mezclas 6 completada fase 2******
-//   function calcularConsumoMezclas() {
-//     // Obtener el valor del campo "pesoSeco"
-//     const pesoSecoInput = document.getElementById("pesoSeco") as HTMLInputElement;
-//     const pesoSeco = parseFloat(pesoSecoInput.value)
-//     // Calcular el consumo de mezclas multiplicando por 0.55
-//     const consumoMezclas1 = pesoSeco * 0.55;
-
-//     // Mostrar el resultado en el campo "consumoMezclas"
-//     (document.getElementById("consumoMezclas") as HTMLInputElement).value = consumoMezclas1.toString();
-
-//     // También puedes devolver el resultado si quieres usarlo en otro lugar
-//     return consumoMezclas1;
-//   }
-//   calcularConsumoMezclas();
-
-//   //*****suma tiempo 7 completada face 2*****
-//   function sumarTiempos() {
-//     // Obtener los valores de los campos de tiempo
-//     const tiempoSecadoInput = document.getElementById("tiempoSecado") as HTMLInputElement;
-//     const tiempoAdicionalInput = document.getElementById("tiempoAdicional") as HTMLInputElement;
-//     const tiempoEnfriamientoInput = document.getElementById("tiempoEnfriamiento") as HTMLInputElement;
-
-//     // Intentar convertir los valores a números
-//     const tiempoSecado = parseFloat(tiempoSecadoInput.value) || 0;
-//     const tiempoAdicional = parseFloat(tiempoAdicionalInput.value) || 0;
-//     const tiempoEnfriamiento = parseFloat(tiempoEnfriamientoInput.value) || 0;
-
-//     // Verificar si la conversión fue exitosa
-//     if (isNaN(tiempoSecado) || isNaN(tiempoAdicional) || isNaN(tiempoEnfriamiento)) {
-//       console.error("Error: Uno o más valores de tiempo no son números válidos.");
-//       return;
-//     }
-
-//     // Sumar los tiempos
-//     const totalTiempos = tiempoSecado + tiempoAdicional + tiempoEnfriamiento;
-//     console.log("totalTiempoww", totalTiempos);
-
-//     // Mostrar el resultado en el campo "totalTiempo"
-//     console.log("totalTiempos", totalTiempos);
-//     (document.getElementById("totalTiempo") as HTMLInputElement).value = totalTiempos.toString();
-
-//     return totalTiempos;
-//   }
-//   sumarTiempos();
-
-// }
-
-
-function obtenerElemento(id, tipo) {
+function obtenerElemento(id) {
   const elemento = document.getElementById(id);
   if (!elemento) {
     console.error(`Elemento no encontrado: ${id}`);
@@ -367,54 +181,3 @@ function obtenerElemento(id, tipo) {
 
   return elemento.value;
 }
-
-function extraerDatos() {
-  try {
-    console.log("EXTRAEMOS LOS DATOS");
-
-    const elementos = {
-      fechaProduccion: 'input',
-      fechaSecado: 'input',
-      secador: 'select',
-      auxiliares: 'select',
-      referencia: 'select',
-      referenciaExtraida: 'input',
-      turno: 'select',
-      lote: 'input',
-      maquina: 'select',
-      registro: 'input',
-      reproceso: 'select',
-      tipoReproceso: 'select',
-      anteriorRegistro: 'input',
-      temperatura: 'input',
-      tiempoSecado: 'input',
-      tiempoAdicional: 'input',
-      tiempoEnfriamiento: 'input',
-      silicona: 'input',
-      pesoSeco: 'input',
-      unidades: 'input',
-      unidadesTeoricas: 'input',
-      diferencia: 'input',
-      consumoMezclas: 'input',
-      observaciones: 'select',
-      totalTiempo: 'input',
-      totalTiempoMinimo: 'input'
-    };
-
-    const data = {};
-
-    for (const [id, tipo] of Object.entries(elementos)) {
-      data[id] = obtenerElemento(id, tipo);
-      console.log(`${id}: ${data[id]}`);
-    }
-
-    console.log(data);
-    return data;
-
-  } catch (error) {
-    console.error("Error al recolectar la data del formulario: ", error);
-  }
-}
-
-// Llama a las funciones adicionales aquí si es necesario
-// Por ejemplo: toggleCampos(), calcularResultado(), actualizarDiferencia(), etc.
