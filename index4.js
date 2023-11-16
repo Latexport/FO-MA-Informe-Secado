@@ -12,49 +12,28 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 async function submit() {
-  console.log("submit()");
+  console.log("[submit()]");
 
   // Obtiene los valores ingresados en el formulario
   const datosExtraidos = extraerDatos();
   console.log("LOS DATOS SON : ", datosExtraidos);
   // Establece los valores en las celdas correspondientes
 
-  const data = [
-    [
-      datosExtraidos.fechaProduccion,
-      datosExtraidos.fechaSecado,
-      datosExtraidos.secador,
-      datosExtraidos.auxiliares,
-      datosExtraidos.referencia,
-      datosExtraidos.referenciaExtraida,
-      datosExtraidos.turno,
-      datosExtraidos.lote,
-      datosExtraidos.maquina,
-      datosExtraidos.registro,
-      datosExtraidos.reproceso,
-      datosExtraidos.tipoReproceso,
-      datosExtraidos.anteriorRegistro,
-      datosExtraidos.temperatura,
-      datosExtraidos.tiempoSecado,
-      datosExtraidos.tiempoAdicional,
-      datosExtraidos.tiempoEnfriamiento,
-      datosExtraidos.silicona,
-      datosExtraidos.pesoSeco,
-      datosExtraidos.unidades,
-      datosExtraidos.unidadesTeoricas,
-      datosExtraidos.diferencia,
-      datosExtraidos.consumoMezclas,
-      datosExtraidos.observaciones,
-      datosExtraidos.totalTiempo,
-      datosExtraidos.totalTiempoMinimo
-    ]
+  //una funcion manejara todo los dados , creanod nuevas varibles segun lo necesecitados
+  const dataExport = convertirDatos(datosExtraidos)
+
+  //devuelve un array en el orden de las columnas
+  const data = organisarCeldas(dataExport)
+
+  const dataExcel = [
+    ...data
   ];
 
   // Nombre de la hoja en la que deseas guardar los datos
 
   // Guarda los datos en Excel en la hoja especificada
   const nombreHoja = "seguimiento";
-  await agregarDatosExcel(nombreHoja, data);
+  await agregarDatosExcel(nombreHoja, dataExcel);
   console.log("TERMINAMOS DE AGREGAR LOS DATOS A LA TABLA");
 }
 
@@ -122,6 +101,34 @@ async function agregarDatosExcel(nombreHoja, data) {
     });
   } catch (error) {
     console.log("Error al agregar datos a Excel:", error);
+  }
+}
+
+function convertirDatos(data) {
+  try {
+    //agregamos los nuevos parametros y varibles que al final vamos a mandar a la hoja
+    const nuevaVariable = ' es un ejemplo '
+    //tambien ejecutamos aqui las funiciones de converdion de los datos 
+    // ejem: la suma de las horas en una nueva variable
+
+    return { ...data, nuevaVariable }
+  } catch (error) {
+    throw error
+  }
+}
+function organisarCeldas(data) {
+  try {
+    //organizamos las variables en el orden que queremos
+    const rta = [
+      data.nuevaVariable,
+      //el resto de la varibles en orden
+    ]
+    // tambien podemos hacer algo asi pero el orden no quedaria especifiacdo
+    // const rta = Object.values(data);
+
+    return rta
+  } catch (error) {
+    throw error
   }
 }
 
