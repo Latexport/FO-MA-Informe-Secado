@@ -45,6 +45,8 @@ function inputChange() {
   };
  
   const referenciaMaquinaChange = ()=>{
+    const referencia = obtenerElemento('referencia').value;
+
     const calibre = buscarCalibreReferencia();
   }
   //la lista de lo inputs que cambian
