@@ -21,18 +21,46 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
  //* CUANDO CARGE EL DOM se va ejecutar la funcion 
+ buscarCalibreReferencia()
  referenciaMaquinaChange()
   inputChange()
-  buscarCalibreReferencia()
+  
+  
 
 });
+function buscarCalibreReferencia(referencia) {
+  const indice = guanteJson.findIndex(g => g.referencia === referencia);
+
+  console.log("indice", indice);
+
+  if (indice !== -1) {
+    const guante = guanteJson[indice];
+    console.log("El calibre encontrado es:", guante.calibre);
+    return guante.calibre;
+  } else {
+    console.log("Referencia no encontrada en guanteJson.");
+    return null;
+  }
+
+  
+}
+const maquinaInput = obtenerElemento('maquina');
+  maquinaInput.addEventListener('change', referenciaMaquinaChange);
+
 function referenciaMaquinaChange() {
+  
   const referencia = obtenerElemento('referencia').value;
+  console.log("La referencia seleccionada es:", referencia);
+
   const calibre = buscarCalibreReferencia(referencia);
+  console.log("Contenido de guanteJson:", guanteJson);
 
   const maquina = obtenerElemento('maquina').value;
-  const temperaturaInput = obtenerElemento('temperatura');
+  console.log("maquina console", maquina);
 
+  const temperaturaInput = obtenerElemento('temperatura').value;
+  console.log("temperatura",temperatura);
+ 
   // Verifica las condiciones de máquina y calibre para establecer la temperatura
   if (maquina === '2' && calibre === 18) {
     temperaturaInput.value = '70';
@@ -43,10 +71,7 @@ function referenciaMaquinaChange() {
   console.log("la temperetura es", temperaturaInput)
   console.log("el calibre es", calibre)
 }
-function buscarCalibreReferencia(referencia) {
-  const guante = guanteJson.find(g => g.referencia === referencia);
-  return guante ? guante.calibre : null;
-}
+
 
 function inputChange() {
   const sumaTotalTiempo = () => {
@@ -69,7 +94,8 @@ function inputChange() {
 
   const referenciaInput = obtenerElemento('referencia');
   referenciaInput.addEventListener('change', referenciaMaquinaChange);
- 
+  
+
  
   //la lista de lo inputs que cambian
   const listInputs = {
@@ -103,9 +129,6 @@ function inputChange() {
   }
 }
 
-function buscarCalibreReferencia(){
-  
-}
 
 async function submit() {
   console.log("[submit]");
