@@ -4,27 +4,68 @@ document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("hojacalculo").addEventListener("submit", (event) => {
 
     event.preventDefault(); // Evita que se envíe el formulario de forma predeterminada
-
+    tiempoSecado
     //ejecutamos la funcion principal
     submit();
   });
+
+
+  inputChange()
+
 });
+
+function inputChange() {
+  const sumaTotalTiempo = () => {
+    //
+    const tiempoAdicional = obtenerElemento('tiempoAdicional').value;
+    const tiempoSecado = obtenerElemento('tiempoSecado').vulue;
+    const tiempoEnfriamiento = obtenerElemento('tiempoEnfriamiento').vulue;
+
+    const totalTiempo = obtenerElemento('totalTiempo');
+    totalTiempo.vulue = tiempoAdicional + tiempoSecado + tiempoEnfriamiento;
+  };
+  //la lista de lo inputs que cambian
+  const listInputs = {
+    'tiempoSecado': {
+      nameInput: 'tiempoSecado',
+      tranform: sumaTotalTiempo
+    },
+    'tiempoAdicional': {
+      nameInput: 'tiempoAdicional',
+      tranform: sumaTotalTiempo
+    },
+    // 'tiempoEnfriamiento': 'tiempoEnfriamiento',
+    // 'referencia': 'referencia',
+    // 'maquina': 'maquina',
+    // 'reproceso': 'reproceso',
+    // 'unidades': 'unidades',
+    // 'unidadesTeoricas': 'unidadesTeoricas',
+    // 'diferencia': 'diferencia',
+    // 'consumoMezclas': 'consumoMezclas',
+  }
+
+  for (const key in listInputs) {
+    const element = listInputs[key];
+    const input = obtenerElemento(element.nameInput)
+    input.addEventListener('change', element.tranform)
+  }
+}
 
 async function submit() {
   console.log("[submit]");
 
   // Obtiene los valores ingresados en el formulario
-  const datosExtraidos = extraerDatos();
+  const datosDelFormulario = extraerDatos();
   // Establece los valores en las celdas correspondientes
 
   //una funcion manejara todo los dados , creanod nuevas varibles segun lo necesecitados
-  const dataExport = convertirDatos(datosExtraidos)
+  const dataExport = convertirDatos(datosDelFormulario)
 
   //devuelve un array en el orden de las columnas
   const data = organisarCeldas(dataExport)
 
   const dataExcel = [
-    ...data
+    data
   ];
 
   // Nombre de la hoja en la que deseas guardar los datos
@@ -108,8 +149,12 @@ function convertirDatos(data) {
     const nuevaVariable = ' es un ejemplo '
     //tambien ejecutamos aqui las funiciones de converdion de los datos 
     // ejem: la suma de las horas en una nueva variable
+    const tiempoSecado = data.tiempoSecado
+    const tiempoAdicional = data.tiempoAdicional
 
-    return { ...data, nuevaVariable }
+    const nuevoTiempo = tiempoSecado + tiempoAdicional
+
+    return { ...data, nuevaVariable, nuevoTiempo }
   } catch (error) {
     throw error
   }
@@ -119,6 +164,7 @@ function organisarCeldas(data) {
     //organizamos las variables en el orden que queremos
     const rta = [
       data.nuevaVariable,
+      data.nuevoTiempo, totalTiempo
       //el resto de la varibles en orden
     ]
     // tambien podemos hacer algo asi pero el orden no quedaria especifiacdo
@@ -166,7 +212,7 @@ function extraerDatos() {
     //recojer el valor de cada uno
     const data = {}
     elementos.forEach(element => {
-      data[element] = obtenerElemento(element)
+      data[element] = obtenerElemento(element).vulue
     })
 
     console.log(`los datos son `, data)
@@ -185,5 +231,5 @@ function obtenerElemento(id) {
     return null;
   }
 
-  return elemento.value;
+  return elemento;
 }
