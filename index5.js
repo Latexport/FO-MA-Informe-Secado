@@ -22,7 +22,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
  //* CUANDO CARGE EL DOM se va ejecutar la funcion 
  buscarCalibreReferencia()
- referenciaMaquinaChange()
+
  inputChange()
   
   
@@ -48,23 +48,24 @@ function buscarCalibreReferencia(referencia) {
 }
 
 
-
-function referenciaMaquinaChange() {
-  
+function inputChange() {
+  const sumaTotalTiempo = () => {
+    //
+  const tiempoAdicionalInput = obtenerElemento('tiempoAdicional');
+  const tiempoSecadoInput = obtenerElemento('tiempoSecado');
+  const tiempoEnfriamientoInput = obtenerElemento('tiempoEnfriamiento');
+  const pesoSecoInput = obtenerElemento('pesoSeco');
   const referencia = obtenerElemento('referencia').value;
-  console.log("La referencia seleccionada es:", referencia);
-
   const calibre = buscarCalibreReferencia(referencia);
-  console.log("Contenido de guanteJson:", guanteJson);
-
   const maquina = obtenerElemento('maquina').value;
-  console.log("maquina console", maquina);
-
   const temperatura = obtenerElemento('temperatura').value;
-  // Imprime el valor actual
-  console.log("Antes de la asignación, la temperatura es:", temperatura.value);
 
-  // Verifica las condiciones de máquina y calibre para establecer la temperatura
+
+  const tiempoAdicional = parseInt(tiempoAdicionalInput.value);
+  const tiempoSecado = parseInt(tiempoSecadoInput.value);
+  const tiempoEnfriamiento = parseInt(tiempoEnfriamientoInput.value);
+  const pesoSeco = parseInt(pesoSecoInput.value);
+
   if (maquina === '2' && calibre !== 11) {
     temperatura.value = '70';
   } else if ((maquina !== '2' && (calibre === 11 || calibre === 13 || calibre === 'corrugado' || calibre === 'laminas cal 25 hilaza'))) {
@@ -83,40 +84,6 @@ function referenciaMaquinaChange() {
   } else {
     temperatura.value = '60';
   }
-  
-  console.log("la temperatura es", temperatura); // Imprime el nuevo valor después de la asignación
-  const listInputs2 = {
-    'temperatura': {
-      nameInput: 'temperatura',
-      tranform: referenciaMaquinaChange
-    },
-    
-  }
-  
-  for (const key in listInputs2) {
-    const element = listInputs2[key];
-    const input = obtenerElemento(element.nameInput)
-    input.addEventListener('change', element.tranform)
-  }
-  const maquinaInput = obtenerElemento('maquina');
-  maquinaInput.addEventListener('change', referenciaMaquinaChange);
-}
-
-
-
-function inputChange() {
-  const sumaTotalTiempo = () => {
-    //
-    const tiempoAdicionalInput = obtenerElemento('tiempoAdicional');
-  const tiempoSecadoInput = obtenerElemento('tiempoSecado');
-  const tiempoEnfriamientoInput = obtenerElemento('tiempoEnfriamiento');
-  const pesoSecoInput = obtenerElemento('pesoSeco');
-
-  const tiempoAdicional = parseInt(tiempoAdicionalInput.value);
-  const tiempoSecado = parseInt(tiempoSecadoInput.value);
-  const tiempoEnfriamiento = parseInt(tiempoEnfriamientoInput.value);
-  const pesoSeco = parseInt(pesoSecoInput.value);
-
   consumoMezclas.value = pesoSeco * 0,55;
   console.log("Valores obtenidos de los inputs:", tiempoAdicional, tiempoSecado, tiempoEnfriamiento);
 
@@ -168,6 +135,11 @@ function inputChange() {
       nameInput:'pesoSeco',
       tranform: sumaTotalTiempo
     },
+    'temperatura': {
+      nameInput:'temperatura',
+      tranform: sumaTotalTiempo
+    },
+  
   
   
 

@@ -19,6 +19,30 @@ document.addEventListener("DOMContentLoaded", () => {
     //ejecutamos la funcion principal
     submit();
   });
+  async function obtenerValorPrimeraCeldaVacia() {
+    await Excel.run(async (context) => {
+      const hoja = context.workbook.worksheets.getActiveWorksheet();
+      const columnaJ = hoja.getRange("J:J"); // Obtenemos toda la columna J
+      columnaJ.load("values");
+  
+      await context.sync();
+  
+      // Encontrar la primera fila vacía en la columna J
+      let filaVacia = 1;
+      while (columnaJ.values[filaVacia - 1] && columnaJ.values[filaVacia - 1][0] !== undefined) {
+        filaVacia++;
+      }
+  
+      // Obtener el valor de la celda en la primera fila vacía de la columna J
+      const celda = hoja.getRange(`J${filaVacia}`);
+      celda.load("values");
+  
+      await context.sync();
+  
+      const valorCelda = celda.values[0][0];
+      console.log("El valor de la celda en la primera fila vacía de la columna J es:", valorCelda);
+    });
+  }
 
  //* CUANDO CARGE EL DOM se va ejecutar la funcion 
  buscarCalibreReferencia()
@@ -140,7 +164,7 @@ function inputChange() {
   };
 
   const referenciaInput = obtenerElemento('referencia');
-  referenciaInput.addEventListener('change', referenciaMaquinaChange);
+  referenciaInput.addEventListener('change', sumaTotalTiempo);
   
 
  
