@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", () => {
   console.log("INICIANDO SCRIPT");
 
   const selectReferencias = document.getElementById("referencia");
-
+  const temperaturaInput = obtenerElemento('temperatura');
   guanteJson.forEach(objeto => {
     const option = document.createElement("option");
     option.value = objeto.referencia; // Valor de la opción
@@ -23,7 +23,7 @@ document.addEventListener("DOMContentLoaded", () => {
  //* CUANDO CARGE EL DOM se va ejecutar la funcion 
  buscarCalibreReferencia()
  referenciaMaquinaChange()
-  inputChange()
+ inputChange()
   
   
 
@@ -43,9 +43,11 @@ function buscarCalibreReferencia(referencia) {
   }
 
   
+  
+  
 }
-const maquinaInput = obtenerElemento('maquina');
-  maquinaInput.addEventListener('change', referenciaMaquinaChange);
+
+
 
 function referenciaMaquinaChange() {
   
@@ -58,38 +60,83 @@ function referenciaMaquinaChange() {
   const maquina = obtenerElemento('maquina').value;
   console.log("maquina console", maquina);
 
-  const temperaturaInput = obtenerElemento('temperatura').value;
-  console.log("temperatura",temperatura);
- 
+  const temperatura = obtenerElemento('temperatura').value;
+  // Imprime el valor actual
+  console.log("Antes de la asignación, la temperatura es:", temperatura.value);
+
   // Verifica las condiciones de máquina y calibre para establecer la temperatura
-  if (maquina === '2' && calibre === 18) {
-    temperaturaInput.value = '70';
-  } else if ((maquina === '3' || maquina === '4' || maquina === '5' || maquina === '6') && calibre === 18) {
-    temperaturaInput.value = '60';
+  if (maquina === '2' && calibre !== 11) {
+    temperatura.value = '70';
+  } else if ((maquina !== '2' && (calibre === 11 || calibre === 13 || calibre === 'corrugado' || calibre === 'laminas cal 25 hilaza'))) {
+    if (calibre === 11) {
+      temperatura.value = '55';
+    } else if (calibre === 13) {
+      temperatura.value = '60';
+    } else if (calibre === 'corrugado') {
+      temperatura.value = '65';
+    } else if (calibre === 'laminas cal 25 hilaza') {
+      temperatura.value = '77';
+    } else {
+      // Manejar otros casos si es necesario
+      temperatura.value = '70'; // Valor predeterminado si no coincide con ninguna condición
+    }
+  } else {
+    temperatura.value = '60';
+  }
+  
+  console.log("la temperatura es", temperatura); // Imprime el nuevo valor después de la asignación
+  const listInputs2 = {
+    'temperatura': {
+      nameInput: 'temperatura',
+      tranform: referenciaMaquinaChange
+    },
     
   }
-  console.log("la temperetura es", temperaturaInput)
-  console.log("el calibre es", calibre)
+  
+  for (const key in listInputs2) {
+    const element = listInputs2[key];
+    const input = obtenerElemento(element.nameInput)
+    input.addEventListener('change', element.tranform)
+  }
+  const maquinaInput = obtenerElemento('maquina');
+  maquinaInput.addEventListener('change', referenciaMaquinaChange);
 }
+
 
 
 function inputChange() {
   const sumaTotalTiempo = () => {
     //
-    const tiempoAdicional = obtenerElemento('tiempoAdicional').value;
-    const tiempoSecado = obtenerElemento('tiempoSecado').value;
-    console.log("tiempoSecado")
+    const tiempoAdicionalInput = obtenerElemento('tiempoAdicional');
+  const tiempoSecadoInput = obtenerElemento('tiempoSecado');
+  const tiempoEnfriamientoInput = obtenerElemento('tiempoEnfriamiento');
 
-    console.log(obtenerElemento('tiempoSecado'))
+  const tiempoAdicional = parseInt(tiempoAdicionalInput.value);
+  const tiempoSecado = parseInt(tiempoSecadoInput.value);
+  const tiempoEnfriamiento = parseInt(tiempoEnfriamientoInput.value);
 
-    const tiempoEnfriamiento = obtenerElemento('tiempoEnfriamiento').value;
+  console.log("Valores obtenidos de los inputs:", tiempoAdicional, tiempoSecado, tiempoEnfriamiento);
 
-    const totalTiempo = obtenerElemento('totalTiempo');
-    console.log("cambiando suma total tiempo")
-    console.log( tiempoAdicional , tiempoSecado , tiempoEnfriamiento);
-    console.log("tiempoAdicional , tiempoSecado , tiempoEnfriamiento",tiempoAdicional + tiempoSecado + tiempoEnfriamiento )
-    
-    totalTiempo.value = parseInt(tiempoAdicional) + parseInt(tiempoSecado) + parseInt(tiempoEnfriamiento);
+  if (!isNaN(tiempoAdicional) && !isNaN(tiempoSecado) && !isNaN(tiempoEnfriamiento)) {
+    const totalTiempo = tiempoAdicional + tiempoSecado + tiempoEnfriamiento;
+
+    if (!isNaN(totalTiempo)) {
+      const horas = Math.floor(totalTiempo / 60);
+      const minutos = totalTiempo % 60;
+
+      const tiempoTotalFormato = `${horas} horas ${minutos} minutos`;
+
+      obtenerElemento('totalTiempo').value = tiempoTotalFormato;
+
+      console.log("Total de tiempo calculado:", tiempoTotalFormato);
+    } else {
+      console.error('La suma total de tiempo no es un número válido.');
+    }
+  } else {
+    console.error('Al menos uno de los valores de tiempo no es un número válido.');
+  }
+  totalTiempoMinimo.value = parseInt(tiempoAdicional) + parseInt(tiempoSecado) + parseInt(tiempoEnfriamiento) + " minutos ";
+
   };
 
   const referenciaInput = obtenerElemento('referencia');
@@ -112,6 +159,7 @@ function inputChange() {
       nameInput:'tiempoEnfriamiento',
       tranform: sumaTotalTiempo
     },
+  
 
     // 'referencia': 'referencia',
     // 'maquina': 'maquina',
@@ -307,7 +355,7 @@ function obtenerElemento(id) {
   console.log('id', id);
   
   const elemento = document.getElementById(id);
-  if (!elemento) {
+    if (!elemento) {
     console.error(`Elemento no encontrado: ${id}`);
     return null;
   }
