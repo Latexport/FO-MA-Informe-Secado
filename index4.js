@@ -21,9 +21,32 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
  //* CUANDO CARGE EL DOM se va ejecutar la funcion 
+ referenciaMaquinaChange()
   inputChange()
+  buscarCalibreReferencia()
 
 });
+function referenciaMaquinaChange() {
+  const referencia = obtenerElemento('referencia').value;
+  const calibre = buscarCalibreReferencia(referencia);
+
+  const maquina = obtenerElemento('maquina').value;
+  const temperaturaInput = obtenerElemento('temperatura');
+
+  // Verifica las condiciones de máquina y calibre para establecer la temperatura
+  if (maquina === '2' && calibre === 18) {
+    temperaturaInput.value = '70';
+  } else if ((maquina === '3' || maquina === '4' || maquina === '5' || maquina === '6') && calibre === 18) {
+    temperaturaInput.value = '60';
+    
+  }
+  console.log("la temperetura es", temperaturaInput)
+  console.log("el calibre es", calibre)
+}
+function buscarCalibreReferencia(referencia) {
+  const guante = guanteJson.find(g => g.referencia === referencia);
+  return guante ? guante.calibre : null;
+}
 
 function inputChange() {
   const sumaTotalTiempo = () => {
@@ -43,12 +66,11 @@ function inputChange() {
     
     totalTiempo.value = parseInt(tiempoAdicional) + parseInt(tiempoSecado) + parseInt(tiempoEnfriamiento);
   };
- 
-  const referenciaMaquinaChange = ()=>{
-    const referencia = obtenerElemento('referencia').value;
 
-    const calibre = buscarCalibreReferencia();
-  }
+  const referenciaInput = obtenerElemento('referencia');
+  referenciaInput.addEventListener('change', referenciaMaquinaChange);
+ 
+ 
   //la lista de lo inputs que cambian
   const listInputs = {
     'tiempoSecado': {
