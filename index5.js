@@ -208,6 +208,7 @@ function referenciaMaquinaChange() {
 
   // Verifica las condiciones de máquina y calibre para establecer la temperatura
   const { calibreDato, timepoCalor, tiempoEnfriamiento, temperaturaDato } = cambiarDatosPorMaquina(maquina, calibre);
+  console.log("🚀 ~ file: index5.js:211 ~ referenciaMaquinaChange ~  { calibreDato, timepoCalor, tiempoEnfriamiento, temperaturaDato }:", { calibreDato, timepoCalor, tiempoEnfriamiento, temperaturaDato })
 
   console.log("la temperatura es", temperatura.value); // Imprime el nuevo valor después de la asignación
 }
