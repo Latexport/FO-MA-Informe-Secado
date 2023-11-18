@@ -93,24 +93,7 @@ function inputChange() {
     const tiempoEnfriamiento = parseInt(tiempoEnfriamientoInput.value);
     const pesoSeco = parseInt(pesoSecoInput.value);
 
-    if (maquina === '2' && calibre !== 11) {
-      temperatura.value = '70';
-    } else if ((maquina !== '2' && (calibre === 11 || calibre === 13 || calibre === 'corrugado' || calibre === 'laminas cal 25 hilaza'))) {
-      if (calibre === 11) {
-        temperatura.value = '55';
-      } else if (calibre === 13) {
-        temperatura.value = '60';
-      } else if (calibre === 'corrugado') {
-        temperatura.value = '65';
-      } else if (calibre === 'laminas cal 25 hilaza') {
-        temperatura.value = '77';
-      } else {
-        // Manejar otros casos si es necesario
-        temperatura.value = '70'; // Valor predeterminado si no coincide con ninguna condición
-      }
-    } else {
-      temperatura.value = '60';
-    }
+
     consumoMezclas.value = pesoSeco * 0, 55;
     console.log("Valores obtenidos de los inputs:", tiempoAdicional, tiempoSecado, tiempoEnfriamiento);
 
@@ -159,7 +142,7 @@ function inputChange() {
     },
     'pesoSeco': {
       nameInput: 'pesoSeco',
-      tranform: sumaTotalTiempo
+      tranform: referenciaMaquinaChange
     },
     'referencia': {
       nameInput: 'referencia',
@@ -189,11 +172,11 @@ function referenciaMaquinaChange() {
 
   const referencia = obtenerElemento('referencia').value;
   console.log("La referencia seleccionada es:", referencia);
-
+const pesoSeco = parseInt(obtenerElemento('pesoSeco').value);
   const productoReferencia = buscarReferencia(referencia);
   console.log("Contenido de guanteJson:", productoReferencia);
   const calibre = productoReferencia.calibre
-  const pesoMedio = productoReferencia.pesoMedio
+  const pesoMedio = parseInt(productoReferencia.pesoMedio)
   const referenciaExtraida = productoReferencia.referenciaExtraida
   //ponemos al input el valor de la referencia
   const referenciaExtraidaInput = obtenerElemento('referenciaExtraida');
@@ -203,6 +186,11 @@ function referenciaMaquinaChange() {
   console.log("maquina console", maquina);
 
   const temperatura = obtenerElemento('temperatura'); // = ''
+
+  const formula =((pesoSeco * 1000 ) / pesoMedio) * 2;
+console.log("formula", formula)
+  obtenerElemento('unidadesTeoricas').value = formula;
+
   // Imprime el valor actual
   console.log("Antes de la asignación, la temperatura es:", temperatura.value);
 
@@ -210,6 +198,11 @@ function referenciaMaquinaChange() {
   const { calibreDato, timepoCalor, tiempoEnfriamiento, temperaturaDato } = cambiarDatosPorMaquina(maquina, calibre);
   console.log(" { calibreDato, timepoCalor, tiempoEnfriamiento, temperaturaDato }:", { calibreDato, timepoCalor, tiempoEnfriamiento, temperaturaDato })
 
+  obtenerElemento('temperatura').value= temperaturaDato;
+  obtenerElemento('tiempoSecado').value= timepoCalor;
+  obtenerElemento('tiempoEnfriamiento').value= tiempoEnfriamiento;
+  
+  
   console.log("la temperatura es", temperatura.value); // Imprime el nuevo valor después de la asignación
 }
 
