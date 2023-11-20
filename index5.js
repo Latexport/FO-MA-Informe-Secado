@@ -290,7 +290,7 @@ async function agregarDatosExcel(nombreHoja, data) {
       await context.sync();
 
       // Fila específica a la que quieres agregar los datos (19377 en este caso)
-      const fila = await obtenerNumeroFila(sheet, context);
+      const fila = 19377
 
       console.log("Intentando agregar datos en la fila:", fila);
 
