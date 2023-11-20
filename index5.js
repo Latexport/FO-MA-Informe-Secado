@@ -310,6 +310,7 @@ async function obtenerNumeroFila(sheet, context) {
   try {
     // Obtener todas las celdas en la columna A
     const dataRange = sheet.getRange("A:A");
+    console.log("🚀 ~ file: index5.js:313 ~ obtenerNumeroFila ~ dataRange:", dataRange)
 
     // Cargar las propiedades de la celda y sincronizar el contexto
     dataRange.load("values");
