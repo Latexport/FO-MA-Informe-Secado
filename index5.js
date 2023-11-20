@@ -241,7 +241,7 @@ async function submit() {
   const dataExport = convertirDatos(datosDelFormulario)
 
   //devuelve un array en el orden de las columnas
-  const data = organisarCeldas(dataExport)
+  const data = organisarCeldas(datosDelFormulario)
 
   const dataExcel = [
     data
@@ -401,8 +401,34 @@ function organisarCeldas(data) {
   try {
     //organizamos las variables en el orden que queremos
     const rta = [
-      data.nuevaVariable,
-      data.nuevoTiempo,
+      data['fechaProduccion'],
+      data['fechaSecado'],
+      data['secador'],
+      data['auxiliares'],
+      data['referencia'],
+      data['referenciaExtraida'],
+      data['turno'],
+      data['lote'],
+      data['maquina'],
+      data['registro'],
+      data['reproceso'],
+      data['tipoReproceso'],
+      data['anteriorRegistro'],
+      data['temperatura'],
+      data['tiempoSecado'],
+      data['tiempoAdicional'],
+      data['tiempoEnfriamiento'],
+      data['silicona'],
+      data['pesoSeco'],
+      data['unidades'],
+      data['unidadesTeoricas'],
+      data['diferencia'],
+      data['consumoMezclas'],
+      data['observaciones'],
+      data['totalTiempo'],
+      data['totalTiempoMinimo'],
+      
+     
       //el resto de la varibles en orden
     ]
     // tambien podemos hacer algo asi pero el orden no quedaria especifiacdo
