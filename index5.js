@@ -289,7 +289,7 @@ async function agregarDatosExcel(nombreHoja, data) {
       const sheet = context.workbook.worksheets.getItem(nombreHoja);
 
       // Fila específica a la que quieres agregar los datos (19377 en este caso)
-      const fila = await numeroFila(sheet, context);
+      const fila = await obtenerNumeroFila(sheet, context);
 
       console.log("Intentando agregar datos en la fila:", fila);
 
@@ -314,9 +314,12 @@ async function obtenerNumeroFila(sheet, context) {
     // Cargar las propiedades de la celda y sincronizar el contexto
     dataRange.load("values");
     await context.sync();
+    console.log(`dataRange`, dataRange)
 
     // Verificar si dataRange.values es null o undefined
     if (!dataRange.values) {
+      console.log(`no hay valores es mull`)
+
       // Si es null, devolver la primera fila (no hay datos en la columna A)
       return 1;
     }
