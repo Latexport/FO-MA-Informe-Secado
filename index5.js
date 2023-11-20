@@ -211,7 +211,7 @@ function cambiarDatosPorMaquina(maquina, calibre) {
 
   let listMaquinaSelecionada = []
   if (maquina == 2) {
-    listMaquinaSelecionada = datosMaquina219
+    listMaquinaSelecionada = datosMaquina2
   } else {
     listMaquinaSelecionada = datosMaquinas
   }
@@ -282,6 +282,8 @@ async function numeroFila(sheet, context) {
 }
 
 async function agregarDatosExcel(nombreHoja, data) {
+  console.log("nombreHoja:", nombreHoja);
+
   try {
     await Excel.run(async (context) => {
       const sheet = context.workbook.worksheets.getItem(nombreHoja);
