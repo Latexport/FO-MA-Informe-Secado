@@ -316,24 +316,31 @@ async function agregarDatosExcel(nombreHoja, data) {
  */
 function obtenerDatosDeColumna(nombreHoja, letraColumna = 'A') {
   return Excel.run(function (context) {
-    // Obtén la hoja de trabajo por su nombre
-    var sheet = context.workbook.worksheets.getItem(nombreHoja);
-
-    // Define el rango de la columna (ejemplo: 'A:A')
-    var columna = sheet.getRange(`${letraColumna}:${letraColumna}`);
-
-    // Carga los valores en el rango
-    columna.load('values');
-
-    // Sincroniza el estado del contexto y maneja los datos
+    var workbook = context.workbook;
+    var worksheets = workbook.worksheets;
+    worksheets.load('items/name');
     return context.sync().then(function () {
-      var valores = columna.values;
-      var datosDeLaColumna = valores.map(function (fila) {
-        return fila[0];
-      });
+      // Verifica si la hoja de trabajo existe
+      if (!worksheets.items.map(sheet => sheet.name).includes(nombreHoja)) {
+        throw new Error(`La hoja de trabajo '${nombreHoja}' no existe.`);
+      }
 
-      // Filtra los valores no definidos o vacíos
-      return datosDeLaColumna.filter(valor => valor !== undefined && valor !== "");
+      var sheet = worksheets.getItem(nombreHoja);
+      var columna = sheet.getRange(`${letraColumna}:${letraColumna}`);
+      columna.load('values');
+
+      return context.sync().then(function () {
+        if (!columna.values || columna.values.length === 0) {
+          return []; // Devuelve un array vacío si no hay datos
+        }
+
+        var datosDeLaColumna = columna.values.map(function (fila) {
+          return fila[0];
+        });
+
+        // Filtra los valores no definidos o vacíos
+        return datosDeLaColumna.filter(valor => valor !== undefined && valor !== "");
+      });
     });
   }).catch(function (error) {
     console.error("Error: " + error);
