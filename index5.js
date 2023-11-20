@@ -283,32 +283,22 @@ async function numeroFila(sheet, context) {
 
 async function agregarDatosExcel(nombreHoja, data) {
   try {
-    await Excel.run(function (context) {
-      var sheet = context.workbook.worksheets.getItem(nombreHoja);
-      var range = sheet.getUsedRange();
-      console.log("🚀 ~ file: index5.js:289 ~ range:", range)
-      range.load('rowCount');
+    await Excel.run(async (context) => {
+      const sheet = context.workbook.worksheets.getItem(nombreHoja);
 
-      return context.sync().then(function () {
-        var rowCount = range.rowCount;
-        console.log("🚀 ~ file: index5.js:293 ~ rowCount:", rowCount)
+      // Fila específica a la que quieres agregar los datos (19377 en este caso)
+      const fila = obtenerNumeroFila(sheet, context);
 
-        // Encuentra la primera fila vacía
-        var primeraFilaVacia = rowCount + 1;
+      console.log("Intentando agregar datos en la fila:", fila);
 
-        // Escribe los datos en la fila vacía
-        var filaParaEscribir = sheet.getRange(`A${primeraFilaVacia}`);
-        filaParaEscribir.values = data;
+      let columnaLetra = obtenerLetraColumnaDesdeNumero(data[0].length);
 
-        return context.sync();
-      });
-    }).catch(function (error) {
-      console.log("Error: " + error);
-      if (error instanceof OfficeExtension.Error) {
-        console.log("Debug info: " + JSON.stringify(error.debugInfo));
-      }
+      // Ajusta esta ubicación según tus necesidades
+      let dataRange = sheet.getRange(`A${fila}:${columnaLetra}${fila}`);
+      dataRange.values = data;
+
+      return context.sync();
     });
-
   } catch (error) {
     console.log("Error al agregar datos a Excel:", error);
   }
