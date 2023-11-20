@@ -283,8 +283,7 @@ async function numeroFila(sheet, context) {
 
 async function agregarDatosExcel(nombreHoja, data) {
   console.log("nombreHoja:", nombreHoja);
-  const datosColumna = obtenerDatosDeColumna(nombreHoja).then(data => console.log(`data obtenerDatosDeColumna `, data)
-  )
+
   console.log(" datosColumna:", datosColumna)
   try {
     await Excel.run(async (context) => {
@@ -359,17 +358,13 @@ async function obtenerNumeroFila(sheet, context) {
   try {
     // Obtener todas las celdas en la columna A
     const dataRange = sheet.getRange("A:A");
-    console.log("🚀 ~ file: index5.js:313 ~ obtenerNumeroFila ~ dataRange:", dataRange)
 
     // Cargar las propiedades de la celda y sincronizar el contexto
     dataRange.load("values");
     await context.sync();
-    console.log(`dataRange`, dataRange)
 
     // Verificar si dataRange.values es null o undefined
     if (!dataRange.values) {
-      console.log(`no hay valores es mull`)
-
       // Si es null, devolver la primera fila (no hay datos en la columna A)
       return 1;
     }
