@@ -283,7 +283,8 @@ async function numeroFila(sheet, context) {
 
 async function agregarDatosExcel(nombreHoja, data) {
   console.log("nombreHoja:", nombreHoja);
-  const datosColumna = await obtenerDatosDeColumna(nombreHoja)
+  const datosColumna = obtenerDatosDeColumna(nombreHoja).then(data => console.log(`data obtenerDatosDeColumna `, data)
+  )
   console.log(" datosColumna:", datosColumna)
   try {
     await Excel.run(async (context) => {
