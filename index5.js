@@ -94,7 +94,7 @@ function inputChange() {
     const pesoSeco = parseInt(pesoSecoInput.value);
 
 
-    consumoMezclas.value = pesoSeco * 0, 55;
+    consumoMezclas.value = pesoSeco * 0,55;
     console.log("Valores obtenidos de los inputs:", tiempoAdicional, tiempoSecado, tiempoEnfriamiento);
 
     if (!isNaN(tiempoAdicional) && !isNaN(tiempoSecado) && !isNaN(tiempoEnfriamiento)) {
