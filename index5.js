@@ -286,10 +286,12 @@ async function agregarDatosExcel(nombreHoja, data) {
     awaitExcel.run(function (context) {
       var sheet = context.workbook.worksheets.getItem(nombreHoja);
       var range = sheet.getUsedRange();
+      console.log("🚀 ~ file: index5.js:289 ~ range:", range)
       range.load('rowCount');
 
       return context.sync().then(function () {
         var rowCount = range.rowCount;
+        console.log("🚀 ~ file: index5.js:293 ~ rowCount:", rowCount)
 
         // Encuentra la primera fila vacía
         var primeraFilaVacia = rowCount + 1;
