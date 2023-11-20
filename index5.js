@@ -283,7 +283,7 @@ async function numeroFila(sheet, context) {
 
 async function agregarDatosExcel(nombreHoja, data) {
   console.log("nombreHoja:", nombreHoja);
-  const datosColumna = await obtenerDatos()
+  const datosColumna = await obtenerDatosDeColumna(nombreHoja)
   console.log(" datosColumna:", datosColumna)
   try {
     await Excel.run(async (context) => {
@@ -307,43 +307,45 @@ async function agregarDatosExcel(nombreHoja, data) {
     console.log("Error al agregar datos a Excel:", error);
   }
 }
+/**
+ * Obtiene los datos de una columna específica de una hoja de Excel.
+ * 
+ * @param {string} nombreHoja - El nombre de la hoja de trabajo.
+ * @param {string} letraColumna - La letra de la columna (ejemplo: 'A').
+ * @returns {Promise<Array>} Un array con los datos de la columna.
+ */
+function obtenerDatosDeColumna(nombreHoja, letraColumna = 'A') {
+  return Excel.run(function (context) {
+    // Obtén la hoja de trabajo por su nombre
+    var sheet = context.workbook.worksheets.getItem(nombreHoja);
 
-async function obtenerDatos() {
-  try {
-    return new Promise((resolve, reject) => {
-      Excel.run(function (context) {
-        // Obtén la hoja de trabajo activa
-        var sheet = context.workbook.worksheets.getActiveWorksheet();
+    // Define el rango de la columna (ejemplo: 'A:A')
+    var columna = sheet.getRange(`${letraColumna}:${letraColumna}`);
 
-        // Define el rango de la columna (por ejemplo, columna "A")
-        var columna = sheet.getRange("A:A");
+    // Carga los valores en el rango
+    columna.load('values');
 
-        // Carga los valores en el rango
-        columna.load('values');
-
-        // Sincroniza el estado del contexto y maneja los datos
-        return context.sync().then(function () {
-          var valores = columna.values;
-          var datosDeLaColumna = valores.map(function (fila) {
-            return fila[0];
-          });
-
-          // Hacer algo con los datosDeLaColumna
-          console.log(datosDeLaColumna);
-          resolve(datosDeLaColumna)
-        });
-      }).catch(function (error) {
-        console.log("Error: " + error);
-        if (error instanceof OfficeExtension.Error) {
-          console.log("Debug info: " + JSON.stringify(error.debugInfo));
-          reject("Debug info: " + JSON.stringify(error.debugInfo))
-        }
+    // Sincroniza el estado del contexto y maneja los datos
+    return context.sync().then(function () {
+      var valores = columna.values;
+      var datosDeLaColumna = valores.map(function (fila) {
+        return fila[0];
       });
-    })
-  } catch (error) {
-    throw error
-  }
+
+      // Filtra los valores no definidos o vacíos
+      return datosDeLaColumna.filter(valor => valor !== undefined && valor !== "");
+    });
+  }).catch(function (error) {
+    console.error("Error: " + error);
+    if (error instanceof OfficeExtension.Error) {
+      console.error("Debug info: " + JSON.stringify(error.debugInfo));
+    }
+    throw error; // Propaga el error
+  });
 }
+
+// Uso de la función
+// obtenerDatosDeColumna('NombreDeTuHoja', 'A').then(datos => console.log(datos));
 
 async function obtenerNumeroFila(sheet, context) {
   try {
