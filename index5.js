@@ -283,7 +283,8 @@ async function numeroFila(sheet, context) {
 
 async function agregarDatosExcel(nombreHoja, data) {
   console.log("nombreHoja:", nombreHoja);
-
+  const datosColumna = await obtenerDatos()
+  console.log(" datosColumna:", datosColumna)
   try {
     await Excel.run(async (context) => {
       var sheet = context.workbook.worksheets.getActiveWorksheet();
@@ -304,6 +305,43 @@ async function agregarDatosExcel(nombreHoja, data) {
     });
   } catch (error) {
     console.log("Error al agregar datos a Excel:", error);
+  }
+}
+
+async function obtenerDatos() {
+  try {
+    return new Promise((resolve, reject) => {
+      Excel.run(function (context) {
+        // Obtén la hoja de trabajo activa
+        var sheet = context.workbook.worksheets.getActiveWorksheet();
+
+        // Define el rango de la columna (por ejemplo, columna "A")
+        var columna = sheet.getRange("A:A");
+
+        // Carga los valores en el rango
+        columna.load('values');
+
+        // Sincroniza el estado del contexto y maneja los datos
+        return context.sync().then(function () {
+          var valores = columna.values;
+          var datosDeLaColumna = valores.map(function (fila) {
+            return fila[0];
+          });
+
+          // Hacer algo con los datosDeLaColumna
+          console.log(datosDeLaColumna);
+          resolve(datosDeLaColumna)
+        });
+      }).catch(function (error) {
+        console.log("Error: " + error);
+        if (error instanceof OfficeExtension.Error) {
+          console.log("Debug info: " + JSON.stringify(error.debugInfo));
+          reject("Debug info: " + JSON.stringify(error.debugInfo))
+        }
+      });
+    })
+  } catch (error) {
+    throw error
   }
 }
 
