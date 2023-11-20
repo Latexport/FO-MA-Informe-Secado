@@ -94,7 +94,7 @@ function inputChange() {
     const pesoSeco = parseInt(pesoSecoInput.value);
 
 
-    consumoMezclas.value = pesoSeco * 0,55;
+    consumoMezclas.value = pesoSeco * 0, 55;
     console.log("Valores obtenidos de los inputs:", tiempoAdicional, tiempoSecado, tiempoEnfriamiento);
 
     if (!isNaN(tiempoAdicional) && !isNaN(tiempoSecado) && !isNaN(tiempoEnfriamiento)) {
@@ -172,7 +172,7 @@ function referenciaMaquinaChange() {
 
   const referencia = obtenerElemento('referencia').value;
   console.log("La referencia seleccionada es:", referencia);
-const pesoSeco = parseInt(obtenerElemento('pesoSeco').value);
+  const pesoSeco = parseInt(obtenerElemento('pesoSeco').value);
   const productoReferencia = buscarReferencia(referencia);
   console.log("Contenido de guanteJson:", productoReferencia);
   const calibre = productoReferencia.calibre
@@ -187,8 +187,8 @@ const pesoSeco = parseInt(obtenerElemento('pesoSeco').value);
 
   const temperatura = obtenerElemento('temperatura'); // = ''
 
-  const formula =((pesoSeco * 1000 ) / pesoMedio) * 2;
-console.log("formula", formula)
+  const formula = ((pesoSeco * 1000) / pesoMedio) * 2;
+  console.log("formula", formula)
   obtenerElemento('unidadesTeoricas').value = formula;
 
   // Imprime el valor actual
@@ -198,11 +198,11 @@ console.log("formula", formula)
   const { calibreDato, timepoCalor, tiempoEnfriamiento, temperaturaDato } = cambiarDatosPorMaquina(maquina, calibre);
   console.log(" { calibreDato, timepoCalor, tiempoEnfriamiento, temperaturaDato }:", { calibreDato, timepoCalor, tiempoEnfriamiento, temperaturaDato })
 
-  obtenerElemento('temperatura').value= temperaturaDato;
-  obtenerElemento('tiempoSecado').value= timepoCalor;
-  obtenerElemento('tiempoEnfriamiento').value= tiempoEnfriamiento;
-  
-  
+  obtenerElemento('temperatura').value = temperaturaDato;
+  obtenerElemento('tiempoSecado').value = timepoCalor;
+  obtenerElemento('tiempoEnfriamiento').value = tiempoEnfriamiento;
+
+
   console.log("la temperatura es", temperatura.value); // Imprime el nuevo valor después de la asignación
 }
 
@@ -270,33 +270,15 @@ function obtenerLetraColumnaDesdeNumero(numero) {
   }
 }
 
-async function obtenerNumeroFila(sheet, context) {
-  try {
-    // Obtener todas las celdas en la columna A
-    const dataRange = sheet.getRange("A:A");
+async function numeroFila(sheet, context) {
+  const range1 = sheet.getRange("A:A").getUsedRange();
+  range1.load("rowIndex");
+  range1.load("rowCount");
+  await context.sync();
 
-    // Cargar las propiedades de la celda y sincronizar el contexto
-    dataRange.load("values");
-    await context.sync();
+  const lastRow1 = range1.rowIndex + range1.rowCount;
 
-    // Verificar si dataRange.values es null o undefined
-    if (!dataRange.values) {
-      // Si es null, devolver la primera fila (no hay datos en la columna A)
-      return 1;
-    }
-
-    // Encontrar la última fila no vacía en la columna A
-    let ultimaFilaNoVacia = dataRange.values.length;
-    while (ultimaFilaNoVacia > 0 && dataRange.values[ultimaFilaNoVacia - 1][0] === "") {
-      ultimaFilaNoVacia--;
-    }
-
-    // Devolver la siguiente fila después de la última no vacía
-    return ultimaFilaNoVacia + 1;
-  } catch (error) {
-    console.error("Error al obtener el número de fila:", error);
-    throw error;
-  }
+  return lastRow1 + 1;
 }
 
 async function agregarDatosExcel(nombreHoja, data) {
@@ -305,7 +287,7 @@ async function agregarDatosExcel(nombreHoja, data) {
       const sheet = context.workbook.worksheets.getItem(nombreHoja);
 
       // Fila específica a la que quieres agregar los datos (19377 en este caso)
-      const fila = 19377;
+      let fila = await numeroFila(sheet, context);
 
       console.log("Intentando agregar datos en la fila:", fila);
 
