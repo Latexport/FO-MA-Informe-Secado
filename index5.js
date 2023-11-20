@@ -290,7 +290,7 @@ async function agregarDatosExcel(nombreHoja, data) {
       await context.sync();
 
       // Fila específica a la que quieres agregar los datos (19377 en este caso)
-      const fila = await obtenerNumeroFila(sheet, context);
+      const fila = await numeroFila(sheet, context);
 
       console.log("Intentando agregar datos en la fila:", fila);
 
@@ -352,7 +352,16 @@ function obtenerDatosDeColumna(nombreHoja, letraColumna = 'A') {
 
 // Uso de la función
 // obtenerDatosDeColumna('NombreDeTuHoja', 'A').then(datos => console.log(datos));
+async function numeroFila(sheet, context) {
+  const range1 = sheet.getRange("A:A").getUsedRange();
+  range1.load("rowIndex");
+  range1.load("rowCount");
+  await context.sync();
 
+  const lastRow1 = range1.rowIndex + range1.rowCount;
+
+  return lastRow1 + 1;
+}
 async function obtenerNumeroFila(sheet, context) {
   try {
     // Obtener todas las celdas en la columna A
