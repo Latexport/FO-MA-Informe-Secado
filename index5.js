@@ -284,7 +284,6 @@ async function numeroFila(sheet, context) {
 async function agregarDatosExcel(nombreHoja, data) {
   console.log("nombreHoja:", nombreHoja);
 
-  console.log(" datosColumna:", datosColumna)
   try {
     await Excel.run(async (context) => {
       var sheet = context.workbook.worksheets.getActiveWorksheet();
