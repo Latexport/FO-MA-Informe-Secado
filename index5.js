@@ -85,7 +85,7 @@ function inputChange() {
     const referencia = obtenerElemento('referencia').value;
     const calibre = buscarReferencia(referencia);
     const maquina = obtenerElemento('maquina').value;
-    const temperatura = obtenerElemento('temperatura').value;
+    const consumoMezclas = obtenerElemento('consumoMezclas').value;
 
 
     const tiempoAdicional = parseInt(tiempoAdicionalInput.value);
@@ -94,7 +94,7 @@ function inputChange() {
     const pesoSeco = parseInt(pesoSecoInput.value);
 
 
-    consumoMezclas.value = pesoSeco * 0, 55;
+    consumoMezclas.value = pesoSeco * 0,55;
     console.log("Valores obtenidos de los inputs:", tiempoAdicional, tiempoSecado, tiempoEnfriamiento);
 
     if (!isNaN(tiempoAdicional) && !isNaN(tiempoSecado) && !isNaN(tiempoEnfriamiento)) {
