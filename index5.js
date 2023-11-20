@@ -286,8 +286,7 @@ async function agregarDatosExcel(nombreHoja, data) {
 
   try {
     await Excel.run(async (context) => {
-      const sheet = context.workbook.worksheets.getItem(nombreHoja);
-
+      var sheet = context.workbook.worksheets.getActiveWorksheet();
       // Fila específica a la que quieres agregar los datos (19377 en este caso)
       const fila = await obtenerNumeroFila(sheet, context);
 
