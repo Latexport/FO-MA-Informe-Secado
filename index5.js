@@ -172,7 +172,7 @@ function referenciaMaquinaChange() {
 
   const referencia = obtenerElemento('referencia').value;
   console.log("La referencia seleccionada es:", referencia);
-const pesoSeco = parseInt(obtenerElemento('pesoSeco').value);
+  const pesoSeco = parseInt(obtenerElemento('pesoSeco').value);
   const productoReferencia = buscarReferencia(referencia);
   console.log("Contenido de guanteJson:", productoReferencia);
   const calibre = productoReferencia.calibre
@@ -187,8 +187,8 @@ const pesoSeco = parseInt(obtenerElemento('pesoSeco').value);
 
   const temperatura = obtenerElemento('temperatura'); // = ''
 
-  const formula =((pesoSeco * 1000 ) / pesoMedio) * 2;
-console.log("formula", formula)
+  const formula = ((pesoSeco * 1000) / pesoMedio) * 2;
+  console.log("formula", formula)
   obtenerElemento('unidadesTeoricas').value = formula;
 
   // Imprime el valor actual
@@ -198,11 +198,11 @@ console.log("formula", formula)
   const { calibreDato, timepoCalor, tiempoEnfriamiento, temperaturaDato } = cambiarDatosPorMaquina(maquina, calibre);
   console.log(" { calibreDato, timepoCalor, tiempoEnfriamiento, temperaturaDato }:", { calibreDato, timepoCalor, tiempoEnfriamiento, temperaturaDato })
 
-  obtenerElemento('temperatura').value= temperaturaDato;
-  obtenerElemento('tiempoSecado').value= timepoCalor;
-  obtenerElemento('tiempoEnfriamiento').value= tiempoEnfriamiento;
-  
-  
+  obtenerElemento('temperatura').value = temperaturaDato;
+  obtenerElemento('tiempoSecado').value = timepoCalor;
+  obtenerElemento('tiempoEnfriamiento').value = tiempoEnfriamiento;
+
+
   console.log("la temperatura es", temperatura.value); // Imprime el nuevo valor después de la asignación
 }
 
@@ -305,7 +305,7 @@ async function agregarDatosExcel(nombreHoja, data) {
       const sheet = context.workbook.worksheets.getItem(nombreHoja);
 
       // Fila específica a la que quieres agregar los datos (19377 en este caso)
-      const fila = 19377;
+      const fila = obtenerNumeroFila(sheet, context);
 
       console.log("Intentando agregar datos en la fila:", fila);
 
