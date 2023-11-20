@@ -94,7 +94,7 @@ function inputChange() {
     const pesoSeco = parseInt(pesoSecoInput.value);
 
 
-    consumoMezclas.value = pesoSeco * 0,55;
+    consumoMezclas.value = pesoSeco * 0, 55;
     console.log("Valores obtenidos de los inputs:", tiempoAdicional, tiempoSecado, tiempoEnfriamiento);
 
     if (!isNaN(tiempoAdicional) && !isNaN(tiempoSecado) && !isNaN(tiempoEnfriamiento)) {
@@ -289,7 +289,7 @@ async function agregarDatosExcel(nombreHoja, data) {
       const sheet = context.workbook.worksheets.getItem(nombreHoja);
 
       // Fila específica a la que quieres agregar los datos (19377 en este caso)
-      const fila = obtenerNumeroFila(sheet, context);
+      const fila = await obtenerNumeroFila(sheet, context);
 
       console.log("Intentando agregar datos en la fila:", fila);
 
@@ -306,6 +306,34 @@ async function agregarDatosExcel(nombreHoja, data) {
   }
 }
 
+async function obtenerNumeroFila(sheet, context) {
+  try {
+    // Obtener todas las celdas en la columna A
+    const dataRange = sheet.getRange("A:A");
+
+    // Cargar las propiedades de la celda y sincronizar el contexto
+    dataRange.load("values");
+    await context.sync();
+
+    // Verificar si dataRange.values es null o undefined
+    if (!dataRange.values) {
+      // Si es null, devolver la primera fila (no hay datos en la columna A)
+      return 1;
+    }
+
+    // Encontrar la última fila no vacía en la columna A
+    let ultimaFilaNoVacia = dataRange.values.length;
+    while (ultimaFilaNoVacia > 0 && dataRange.values[ultimaFilaNoVacia - 1][0] === "") {
+      ultimaFilaNoVacia--;
+    }
+
+    // Devolver la siguiente fila después de la última no vacía
+    return ultimaFilaNoVacia + 1;
+  } catch (error) {
+    console.error("Error al obtener el número de fila:", error);
+    throw error;
+  }
+}
 function convertirDatos(data) {
   try {
     //agregamos los nuevos parametros y varibles que al final vamos a mandar a la hoja
