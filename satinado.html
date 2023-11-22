@@ -1,0 +1,229 @@
+<div id="content" class="flex">
+    <div class="">
+        <div class="page-content page-container" id="page-content">
+            <div class="padding">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-header"><strong>Registro de Producción</strong></div>
+                            <div class="card-body">
+                                <form id="registroProduccion" method="POST" action="/">
+                                    <!-- Sección de Fechas y Horarios -->
+                                    <div class="row">
+                                            <div class="col">
+                                                <label class="text-muted" for="fechaProduccion">Fecha de Producción</label>
+                                                <input type="date" class="form-control" id="fechaProduccion" name="fechaProduccion">
+                                            </div>
+                                            <div class="col">
+                                                <label class="text-muted" for="fechaSatinado">Fecha de Satinado</label>
+                                                <input type="date" class="form-control" id="fechaSatinado" name="fechaSatinado">
+                                            </div>
+                                    </div>
+                                        <script>
+                                            // Establecer la fecha actual en los campos de fecha
+                                            document.getElementById('fechaProduccion').valueAsDate = new Date();
+                                            document.getElementById('fechaSatinado').valueAsDate = new Date();
+                                            document.getElementById('horaClorado').valueAsDate = new TimeRanges();
+                                          </script>
+                                    
+                                    
+                                    <!-- Sección de Turno y Personal -->
+                                    <div class="row">
+                                        
+                                            <div class="col">
+                                                <label class="text-muted" for="horaClorado">Hora de Clorado</label>
+                                                <input type="time" class="form-control" id="horaClorado" name="horaClorado">
+                                            </div>
+                                            <div class="col">
+                                                <label class="text-muted" for="turno">Turno</label>
+                                                <select class="form-select" id="turno" name="turno">
+                                                    <option>1</option>
+                                                    <option>2</option>
+                                                    <option>3</option>
+                                                    <option>4</option>
+                                                </select>
+                                            </div>
+                                            <script>
+                                                document.getElementById('horaClorado').valueAsDate = new Date();
+                                            </script>
+                                        
+                                    </div>
+                                    <div class="row">
+                                        
+                                            <div class="col">
+                                                <label class="text-muted" for="satinador">Satinador</label>
+                                                <select class="form-select" id="satinador" aria-label="Default select example">
+                                                    <option>Miguel Jaramillo</option>
+                                                    <option>Camilo Arredondo</option>
+                                                    <option>Diego Gallego</option>
+                                                    <option>Jose Barrios</option>
+                                                    <option>Dubian Salazar</option>
+                                                    <option>Santiago Ayala</option>
+                                                  </select>
+                                                <p></p>
+                                            </div>
+                                            
+                                            <div class="col">
+                                                <label class="text-muted" for="auxiliares">Lideres</label>
+                                                <select class="form-select" id="auxiliares" aria-label="Default select example">
+                                                    <option>Isabela Gonzalez</option>
+                                                    <option>Jimena Rivera</option>
+                                                    <option>Mauricio Aguirre</option>
+                                                    <option>Mauricio jaramillo</option>
+                                                    <option>Sandra Gallego</option>
+                                                  </select>
+                                                <p></p>
+                                            </div>
+                                        
+                                    </div>
+                                 
+
+                                    <!-- Sección de Lote y Referencia -->
+                                    <div class="row">
+                                        <div class="col">
+                                            <label class="text-muted" for="lote">Lote</label>
+                                            <input type="text" class="form-control" id="lote" name="lote">
+                                        </div>
+                                        <div class="col">
+                                            <label class="text-muted" for="referencia">Referencia</label>
+                                            <select class="form-select" id="referencia" aria-label="Default select example" > 
+                                                <script>
+                                                    
+                                                </script>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="text-muted" for="referenciaExtraida">Referencia Extraida</label>
+                                        <input type="text"class="form-control"id="referenciaExtraida"name="referenciaExtraida"/>
+                                        <p></p>
+                                    </div>
+        
+                                    <!-- Sección de Reproceso -->
+                                    <div class="row">
+                                        
+                                    <div class="col">
+                                        <label class="text-muted" for="reproceso">Reproceso</label>
+                                        <select class="form-select" id="reproceso" name="reproceso">
+                                            <option>Sí</option>
+                                            <option>No</option>
+                                        </select>
+                                    </div>
+                                    <div class="col">
+                                    <label class="text-muted" for="tipoReproceso">Tipo de Reproceso</label>
+                                    <select class="form-select" id="tipoReproceso" aria-label="Default select example">
+                                        <option>N/A</option>
+                                        <option>Polvillo</option>
+                                        <option>Siliconado</option>
+                                        <option>Reclorado</option>
+                                        <option>Grasoso</option>
+                                        <option>Lavado por hongos</option>
+                                        <option>Lavado por líquidos</option>
+                                        <option>Lavado por Silicona</option>
+                                        <option>Lavado por arenoso</option>
+                                        <option>Grasoso - lavado con tritón</option>
+                                        <option>Reclorado - grasoso</option>
+                                        <option>Lavado con tritón</option>
+                                        <option>Lavado con agua</option>
+                                      </select>
+                                    <p></p>
+                                    </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col">
+                                            <label class="text-muted" for="satinadorAnterior">Satinador Anterior</label>
+                                                    <select class="form-select" id="satinadorAnterior" aria-label="Default select example">
+                                                        <option>N/A</option>
+                                                        <option>Miguel Jaramillo</option>
+                                                        <option>Camilo Arredondo</option>
+                                                        <option>Diego Gallego</option>
+                                                        <option>Jose Barrios</option>
+                                                        <option>Dubian Salazar</option>
+                                                        <option>Santiago Ayala</option>
+                                                      </select>
+                                                    <p></p>
+                                        </div>
+                                        
+                                        <!-- Sección de Registro Anterior -->
+                                        <div class="col">
+                                            <label class="text-muted" for="registroAnterior">Registro Anterior</label>
+                                            <input type="text" class="form-control" id="registroAnterior" name="registroAnterior">
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Sección de Unidades y Unidades Máximas -->
+                                    <div class="row">
+                                        <div class="col">
+                                            <label class="text-muted" for="unidades">Unidades</label>
+                                            <input type="text" class="form-control" id="unidades" name="unidades">
+                                        </div>
+                                        <div class="col">
+                                            <label class="text-muted" for="unidadesMaximas">Unidades Máximas</label>
+                                            <input type="text" class="form-control" id="unidadesMaximas" name="unidadesMaximas">
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Sección de Productos Químicos -->
+                                    <div class="row">
+                                        <div class="col">
+                                            <label class="text-muted" for="hipoclorito">Hipoclorito</label>
+                                            <input type="text" class="form-control" id="hipoclorito" name="hipoclorito">
+                                        </div>
+                                        <div class="col">
+                                            <label class="text-muted" for="acidoNitrico">Ácido Nítrico</label>
+                                            <input type="text" class="form-control" id="acidoNitrico" name="acidoNitrico">
+                                        </div>
+                                        <div class="col">
+                                            <label class="text-muted" for="hiposulfito">Hiposulfito</label>
+                                            <input type="text" class="form-control" id="hiposulfito" name="hiposulfito">
+                                        </div>
+                                        <div class="col">
+                                            <label class="text-muted" for="agua">Agua</label>
+                                            <input type="text" class="form-control" id="agua" name="agua">
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Sección de Tiempos -->
+                                    <div class="row">
+                                        <div class="col">
+                                            <label class="text-muted" for="tiempoSatinado">Tiempo de Satinado</label>
+                                            <input type="text" class="form-control" id="tiempoSatinado" name="tiempoSatinado">
+                                        </div>
+                                        <div class="col">
+                                            <label class="text-muted" for="tiempoNeutralizacion">Tiempo de Neutralización</label>
+                                            <input type="text" class="form-control" id="tiempoNeutralizacion" name="tiempoNeutralizacion">
+                                        </div>
+                                        <div class="col">
+                                            <label class="text-muted" for="tiempoEnjuague">Tiempo de Enjuague</label>
+                                            <input type="text" class="form-control" id="tiempoEnjuague" name="tiempoEnjuague">
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Sección de Pesos -->
+                                    <div class="row">
+                                        <div class="col">
+                                            <label class="text-muted" for="pesoAntes">Peso Antes (g)</label>
+                                            <input type="text" class="form-control" id="pesoAntes" name="pesoAntes">
+                                        </div>
+                                        <div class="col">
+                                            <label class="text-muted" for="pesoDespues">Peso Después (g)</label>
+                                            <input type="text" class="form-control" id="pesoDespues" name="pesoDespues">
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Sección de Observaciones -->
+                                    <div class="form-group">
+                                        <label class="text-muted" for="observaciones">Observaciones</label>
+                                        <textarea class="form-control" id="observaciones" name="observaciones"></textarea>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary">Guardar Registro</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
