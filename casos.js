@@ -267,7 +267,7 @@ document.addEventListener("DOMContentLoaded", () => {
         tipo: "Portátil",
         placa: "63793"
       },
-      "HUGO ARMANDO CORREA MERCADO": {
+      "EDISSON ALBERTO TOBON OCAMPO": {
         cargo: "ANALISTA DE SISTEMAS TI",
         area: "SISTEMAS",
         tipo: "Portátil",
@@ -285,6 +285,18 @@ document.addEventListener("DOMContentLoaded", () => {
         tipo: "Portátil",
         placa: "5CG3126NT8"
       },
+        "JEISON DANILO SOTO MONTOYA": {
+      cargo: "JEFE DE MANTENIMIENTO Y PROYECTOS",
+      area: "MANTENIMIENTO",
+      tipo: "Portátil",
+      placa: "64298"
+    },
+    "JEISON ANDRES JURADO SALAZAR": {
+      cargo: "PLANEADOR DE MANTENIMIENTO",
+      area: "MANTENIMIENTO",
+      tipo: "Portátil",
+      placa: "64298"
+    },
       "JESICA ALEJANDRA DIOSA RUEDA": {
         cargo: "APRENDIZ ETAPA PRODUCTIVA PROFESIONAL",
         area: "GESTION HUMANA",
@@ -347,7 +359,7 @@ document.addEventListener("DOMContentLoaded", () => {
       },
       "JULIANA  GOMEZ GOMEZ": {
         cargo: "APRENDIZ ETAPA LECTIVA TECNICO O TECNOLOGO",
-        area: "GESTION HUMANA",
+        area: "FINANCIERA",
         tipo: "Todo en 1",
         placa: "n/a"
       },
