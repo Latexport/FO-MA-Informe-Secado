@@ -1942,8 +1942,9 @@ function organisarCeldas(data) {
       data["fechaSecado"],
       data["secador"],
       data["auxiliares"],
-      data["referenciaExtraida"],
       data["referencia"],
+      data["referenciaExtraida"],
+      
       data["turno"],
       data["lote"],
       data["maquina"],
@@ -1984,8 +1985,9 @@ function extraerDatos() {
       `fechaSecado`,
       `secador`,
       `auxiliares`,
-      `referencia`,
       `referenciaExtraida`,
+      `referencia`,
+      
       `turno`,
       `lote`,
       `maquina`,
