@@ -1554,11 +1554,11 @@ const datosMaquinas = [
 ];
 
 
-  
+
 document.addEventListener("DOMContentLoaded", () => {
   //agregamos los options de las referencais al select de referencias
   crearOptionsJson();
-
+  searchProducts();
   document.getElementById("hojacalculo").addEventListener("submit", (event) => {
     event.preventDefault(); // Evita que se envíe el formulario de forma predeterminada
     // Ejecutamos la función principal
@@ -1589,7 +1589,7 @@ function searchProducts() {
   });
   const select1 = document.getElementById("referencia");
   crearOptions(select1, results);
-  select1.size = results.length > 0 ? results.length : 1;
+
 
   // Actualiza el contenido del select
 }
@@ -1613,26 +1613,20 @@ function crearOptionsJson(selectReferencias) {
     selectReferencias.appendChild(option);
   });
 }
-function crearOptionsJson(selectReferencias) {
-  const selectReferencias = document.getElementById("referencia");
 
-  guanteJson.forEach((objeto) => {
-    const option = document.createElement("option");
-    option.value = objeto.referencia; // Valor de la opción
-    option.text = objeto.referencia.replace([`GUANTEINDUSTRIALCALIBRE`], ""); // Texto visible de la opción
-    selectReferencias.appendChild(option);
-  });
-}
+
 
 function buscarReferencia(referencia) {
   const indice = guanteJson.findIndex((g) => g.referencia === referencia);
+  console.log("indice", indice);
 
   if (indice !== -1) {
     const guante = guanteJson[indice];
-
+    console.log("la referencia es: ", guante);
     //devueve todo un objeto tipo : { "referenciaExtraida": "INDC35T70NEG-NARSEC", "referencia": "GUANTEINDUSTRIALCALIBRE 35NEGRO-NART7", "calibre": 35, "pesoMedio": "115,27" }
     return guante;
   } else {
+    console.log("Referencia no encontrada en guanteJson.");
     return null;
   }
 }
@@ -1727,7 +1721,7 @@ function referenciaMaquinaChange() {
   const calibre = productoReferencia.calibre;
   const pesoMedio = parseInt(productoReferencia.pesoMedio);
 
-  const referenciaExtraida = productoReferencia.referencia;
+  const referenciaExtraida = productoReferencia.referenciaExtraida;
 
   const referenciaExtraidaInput = obtenerElemento("referenciaExtraida");
   referenciaExtraidaInput.value = referenciaExtraida;
@@ -1784,7 +1778,7 @@ async function submit() {
   const dataExport = convertirDatos(datosDelFormulario);
 
   //devuelve un array en el orden de las columnas
-  const data = organisarCeldas(datosDelFormulario);
+  const data = organisarCeldas(dataExport);
 
   const dataExcel = [data];
 
